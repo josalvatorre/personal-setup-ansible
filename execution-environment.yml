@@ -1,0 +1,44 @@
+# https://ansible.readthedocs.io/projects/builder/en/stable/definition/
+# https://ansible.readthedocs.io/en/latest/getting_started_ee/build_execution_environment.html
+
+version: 3
+
+images:
+  base_image:
+    name: ubuntu:latest
+dependencies:
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
+  python_interpreter:
+    package_system: "python3.10"
+    python_path: "/usr/bin/python3.10"
+  system:
+  - openssh-clients
+  - sshpass
+options:
+  package_manager_path: /usr/bin/apt-get
+additional_build_steps:
+  prepend_base: |
+    ARG FAKE_ENSURE_PIP_FILEPATH="ensurepip.py"
+
+    # Yes, this is ridiculous, but the auto-generated Dockerfile insists on using ensurepip
+    # even though it doesn't exist on Ubuntu. There's no way to install it separately.
+    # Even installing a venv and pip do not sidestep this.
+    RUN echo "print('THIS IS A FAKE ensurepip MODULE!!!')" > "$FAKE_ENSURE_PIP_FILEPATH"
+
+    # We do this instead of "wget ... | $PYCMD" so that errors don't get swallowed by the pipe.
+    RUN $PKGMGR update -y \
+      && $PKGMGR install -y $PYPKG wget \
+      && wget https://bootstrap.pypa.io/get-pip.py \
+      && $PYCMD get-pip.py \
+      && rm -rf get-pip.py \
+      && $PKGMGR remove -y wget
+  append_base: |
+    RUN rm -rf "$FAKE_ENSURE_PIP_FILEPATH"
+  prepend_builder: |
+    RUN ARG FAKE_ENSURE_PIP_FILEPATH="/build/ensurepip.py"
+    RUN echo "print('THIS IS A FAKE ensurepip MODULE!!!')" > "$FAKE_ENSURE_PIP_FILEPATH"
+  append_builder: |
+    RUN rm -rf "$FAKE_ENSURE_PIP_FILEPATH"
