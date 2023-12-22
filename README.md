@@ -50,6 +50,9 @@ ansible-builder --version
 
 ### Build our execution environment
 
+We now just need to build the execution environment.
+You should be able to do something like the following on Mac or Linux.
+
 ```sh
 # I recommend running these commands one at a time in your terminal.
 cd /path/to/this/repo/personal-setup-ansible
