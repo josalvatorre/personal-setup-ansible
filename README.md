@@ -1,78 +1,81 @@
-# Jose's automated personal setup
+# Jose's Ubuntu setup automation using Ansible
 
-I use this repository to automate my personal development machine.
+I use this repository to automate the setting-up of my personal Ubuntu machine for personal development.
+
 Most of the automation is performed using [Ansible][1], an ssh-based
-configuration management software.
+configuration management software originally designed for deploying software to many production machines.
+Nowadays, it's much better to use an immutable-server approach: create a container/vm image and deploy that to
+an orchestration service like Kubernetes. However, Ansible is better for personal machines because:
+
+* Ansible doesn't require controlling the machine's base image.
+  * Your company wants all developers to use the same base image so that it's easier to provide support and
+  enforce security measures.
+  * That means that the immutable-server approach is a non-starter.
+* Ansible makes changes through SSH, which every company I've worked for seems to embrace.
+  * By using Ansible, I'm learning a technology that I can use for both my company and personal machine.
+* We value flexibility over stability compared to a prod server.
+  * We want to be able to make on-the-fly changes to our setup.
+  * Customizing the virtual machine image would mean starting over every time we want to swap the OS.
+* Agent-ful configuration management software like Chef and Puppet might conflict with something my company installed.
+  * If your company uses Puppet or Chef, then using one of those softwares would mean trying to run 2 agents on the
+  same machine, which might either be impossible or risky.
+
+## How to run
+
+We'll run Ansible on the same machine that it manipulates.
+
+I'm assuming that you'll run this in your Ubuntu machine. However, you should be able to customize the inventory or
+playbook to adapt to your use case.
+
+### Quickstart
+
+The Makefile should take care of installing dependencies. You can read it for details.
+The key detail is that we'll use the python interpreter you provide (default: `python3`) to create a virtual
+environment in this directory and install Ansible there. The easiest way to install Python on Ubuntu is
+by using `apt` or `apt-get`. You can google how to do that. [This website][3] has good instructions, but
+please use a newer ython version than `3.6`. Use the latest version of python you can.
+
+```sh
+# I recommend explicitly pointing Ansible to the python interpreter you want to use.
+ORIGINAL_PYTHON_PATH=/path/to/python make devapps-playbook-executed
+# If you don't provide ORIGINAL_PYTHON_PATH, then we default to whatever python3 points to.
+make devapps-playbook-executed
+```
+
+### Activate the virtual environment before running arbitrary Ansible commands
+
+We install Ansible in a virtual environment, so I recommend **_always_** activating the virtual environment
+in your terminal session before running arbitrary Ansible commands. Note that the Makefile tries to always use the
+virtual environment.
+
+```sh
+source ./venv/bin/activate
+```
+
+### Cleaning
+
+Simply run `make clean` to destroy the virtual environment.
+
+```sh
+make clean
+```
+
+## Why not use an [Ansible Execution Environment][2] (ie container)?
+
+jalvarado tried to get this working inside a container, but he gave up for a few reasons:
+
+* The container-free approach is simpler in this case.
+  * Ansible relies on Python (already installed on Mac) and a few packages. It was easy to make the Makefile that
+  creates the virtual environment.
+  * The execution environment has more dependencies.
+    * User has to install Docker/Podman, Python, and a few pip packages.
+  * The ansible navigator is bizarre and not easy to work with.
+* Pinterest engineers are already exposed to python regularly. That's not true with respect to containers.
+* SSH auth relies on gironde, which is specific to Pinterest. You'd either need to figure out how to install gironde
+into the container image or poke a hole in the container so that it can access the host's gironde.
+  * It's not clear whether either method is possible.
+  * If there's any issue, it's going to be incredibly difficult to debug unless you're a container expert.
 
 [1]: https://docs.ansible.com/ansible/latest/
-
-## Setup
-
-### Set up Ansible Navigator
-
-We're going to use an [Ansible Execution Environment][2] (basically a container-based environment)
-to run Ansible so that we have a more predictable environment.
-
-As mentioned in the [Ansible Execution Environment setup instructions][3],
-we need to install Docker, Python (only needed for Ansible Navigator), and Ansible Navigator
-(which basically just manages the execution environments).
-
-1. Install Docker on your machine. ([Installation instructions for Docker Engine][3])
-2. Install Python3
-    * We're only going to use this for the Ansible Navigator, which seems to basically
-    manage the different execution environments.
-    * Ansible itself will run in the container, so it won't be impacted by this
-    version of python.
-    * I suggest installing the latest version of python you can.
-    * You can see the version of python required on [the PyPI page][4].
-    * Google how to install that version of python (or higher) on your machine.
-
-I suggest creating a python virtual environment for this repository so that 
-the list of python packages we use are isolated from the rest of your machine.
-If you're on Mac or Linux, you'll want to do something like the following.
-
-```sh
-# I recommend running these commands one at a time in your terminal.
-cd /path/to/this/repo/personal-setup-ansible
-# Use python3.x where x is whatever version of python you installed.
-# We'll use python 3.10 as an example.
-python3.10 -m venv ./venv
-# Run this to "activate" the virtual environment.
-source ./venv/bin/activate
-# Now that you're in a virtual environment, you can freely call
-# "pip" or "python" without worrying about which version of python
-# you're using or where the packages get installed.
-pip install install ansible-navigator
-# Verify that the following commands print the version ok
-ansible-navigator --version
-ansible-builder --version
-```
-
-### Build our execution environment
-
-We now just need to build the execution environment.
-You should be able to do something like the following on Mac or Linux.
-
-```sh
-# I recommend running these commands one at a time in your terminal.
-cd /path/to/this/repo/personal-setup-ansible
-source ./venv/bin/activate
-# This will create a Docker image tagged with "ansible-execution-environment".
-sudo ./venv/bin/ansible-builder build --tag ansible-execution-environment --container-runtime docker
-# Validate by listing out the docker images.
-sudo docker image ls
-```
-
-### Useful Docker commands
-
-```sh
-# Delete all containers.
-sudo docker rm $(sudo docker container ls --quiet --all)
-# Delete all images.
-sudo docker image rmi $(sudo docker images --quiet)
-```
-
-[1]: https://ansible.readthedocs.io/en/latest/getting_started_ee/setup_environment.html
 [2]: https://ansible.readthedocs.io/en/latest/getting_started_ee/index.html
-[3]: https://docs.docker.com/engine/install/
-[4]: https://pypi.org/project/ansible-navigator/
+[3]: https://docs.python-guide.org/starting/install3/linux/

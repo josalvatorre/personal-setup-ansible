@@ -1,0 +1,5 @@
+this-ubuntu-machine:
+  hosts:
+    localhost:
+      ansible_host: localhost
+      remote_user: josalvatorre

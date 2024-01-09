@@ -1,0 +1,59 @@
+---
+- name: Set up this machine
+  hosts: this-ubuntu-machine
+  # TODO do we need to specify this here given that the inventory already has it?
+  remote_user: josalvatorre
+
+  tasks:
+
+  - name: Install tmux
+    become: yes
+    become_user: root
+    ansible.builtin.apt:
+      name: tmux
+      state: latest
+      update_cache: true
+
+  # https://github.com/pyenv/pyenv/blob/6e3b91a816e5551d646211b71749addffefb0c15/README.md?plain=1#L379-L384
+  - name: Install pyenv dependencies
+    become: yes
+    become_user: root
+    ansible.builtin.apt:
+      state: latest
+      update_cache: true
+      name:
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - curl
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+
+  - name: Install pyenv
+    ansible.builtin.git:
+      repo: https://github.com/pyenv/pyenv.git
+      dest: /home/josalvatorre/.pyenv
+
+  - name: Install Neovim
+    become: yes
+    become_user: root
+    community.general.snap:
+      name: nvim
+      # We use classic to deactivate the restricted environment that snaps normally run in.
+      # This is normal for IDE's, which need generous access to the host machine.
+      classic: true
+
+  - name: Install NvChad
+    become: yes
+    become_user: root
+    ansible.builtin.git:
+      repo: https://github.com/NvChad/NvChad
+      dest: /home/josalvatorre/.config/nvim
