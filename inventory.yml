@@ -1,5 +1,4 @@
 devapps:
   hosts:
     localhost:
-      ansible_host: localhost
-      remote_user: josalvatorre
+      ansible_connection: local

@@ -1,8 +1,6 @@
 ---
 - name: Set up this machine
   hosts: devapps
-  # TODO do we need to specify this here given that the inventory already has it?
-  remote_user: josalvatorre
 
   tasks:
 
