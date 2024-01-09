@@ -1,4 +1,4 @@
-this-ubuntu-machine:
+devapps:
   hosts:
     localhost:
       ansible_host: localhost
