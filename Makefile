@@ -32,7 +32,7 @@ galaxy_collections_are_installed: ensure_ansible_is_installed ensure_scripts_are
 .PHONY: devapps-playbook-executed
 devapps-playbook-executed: hosts_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
-		ansible-playbook ./devapps-playbook.yml -i ./inventory.yml
+		ansible-playbook ./devapps-playbook.yml -i ./inventory.yml --ask-become-pass
 
 .PHONY: clean
 clean:
