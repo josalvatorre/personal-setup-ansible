@@ -29,19 +29,27 @@
       - libffi-dev
       - liblzma-dev
 
+  - name: Install snaps
+    become: yes
+    become_user: root
+    community.general.snap:
+      name:
+      - tldr
+
+  - name: Install classic snaps
+    become: yes
+    become_user: root
+    community.general.snap:
+      # We use classic to deactivate the restricted environment that snaps normally run in.
+      # This is normal for IDE's, which need generous access to the host machine.
+      classic: true
+      name:
+      - nvim
+
   - name: Install pyenv
     ansible.builtin.git:
       repo: https://github.com/pyenv/pyenv.git
       dest: /home/josalvatorre/.pyenv
-
-  - name: Install Neovim
-    become: yes
-    become_user: root
-    community.general.snap:
-      name: nvim
-      # We use classic to deactivate the restricted environment that snaps normally run in.
-      # This is normal for IDE's, which need generous access to the host machine.
-      classic: true
 
   - name: Install NvChad
     become: yes
