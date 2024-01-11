@@ -51,9 +51,11 @@
       repo: https://github.com/pyenv/pyenv.git
       dest: /home/josalvatorre/.pyenv
 
-  - name: Install NvChad
+  - name: Install personal NeoVim config
     become: yes
     become_user: root
     ansible.builtin.git:
-      repo: https://github.com/NvChad/NvChad
+      repo: https://github.com/josalvatorre/personal-nvim-config
       dest: /home/josalvatorre/.config/nvim
+      # This repo was forked from NvChad. The default branch is v2.0.
+      version: v3.0
