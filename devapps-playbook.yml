@@ -12,6 +12,9 @@
       update_cache: true
       name:
       - tmux
+      # Besides installing this package, you need to incorporate it into your bash shell.
+      # https://direnv.net/docs/hook.html
+      - direnv
       # Pyenv packages for building pythons
       # https://github.com/pyenv/pyenv/blob/6e3b91a816e5551d646211b71749addffefb0c15/README.md?plain=1#L379-L384
       - build-essential
