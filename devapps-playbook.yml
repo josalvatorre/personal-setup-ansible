@@ -12,9 +12,6 @@
       update_cache: true
       name:
       - tmux
-      # Besides installing this package, you need to incorporate it into your bash shell.
-      # https://direnv.net/docs/hook.html
-      - direnv
       # Pyenv packages for building pythons
       # https://github.com/pyenv/pyenv/blob/6e3b91a816e5551d646211b71749addffefb0c15/README.md?plain=1#L379-L384
       - build-essential
@@ -53,6 +50,15 @@
     ansible.builtin.git:
       repo: https://github.com/pyenv/pyenv.git
       dest: /home/josalvatorre/.pyenv
+
+  # I wanted direnv, but apt has an old version that's missing critical features.
+  # The build-from-source option for direnv is complicated.
+  # It might make sense to switch over once 2.32.1 makes it into ubuntu.
+  # However, ain't nobody got time for that.
+  - name: Install autoenv
+    ansible.builtin.git:
+      repo: https://github.com/hyperupcall/autoenv.git
+      dest: /home/josalvatorre/.autoenv
 
   - name: Install personal NeoVim config
     become: yes
