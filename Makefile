@@ -4,11 +4,11 @@ VENV_ACTIVATE = venv/bin/activate
 
 .PHONY: ensure_scripts_are_executable
 ensure_scripts_are_executable:
-	chmod 554 ./scripts/*
+	chmod 754 ./scripts/*
 
 .PHONY: ensure_venv_exists_and_activated
 ensure_venv_exists_and_activated: ensure_scripts_are_executable
-	stat ./venv || ( \
+	./scripts/quiet-run.sh stat ./venv || ( \
 		$(ORIGINAL_PYTHON_PATH) -m venv ./venv \
 		&& VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh pip install --upgrade pip \
 	)
