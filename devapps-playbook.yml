@@ -61,9 +61,16 @@
       repo: https://github.com/hyperupcall/autoenv.git
       dest: /home/josalvatorre/.autoenv
 
-  - name: Install personal NeoVim config
+  - name: Install NvChad
     ansible.builtin.git:
       repo: https://github.com/NvChad/NvChad
       dest: /home/josalvatorre/.config/nvim
       # The default branch is v2.0, so we need to explicitly set v3.0
       version: v3.0
+
+  - name: Install custom NvChad directory
+    ansible.builtin.git:
+      repo: https://github.com/josalvatorre/personal-nvchad-custom.git
+      # Putting custom configs here is how you're supposed to customize NvChad.
+      # https://nvchad.com/docs/config/walkthrough#config_structure
+      dest: /home/josalvatorre/.config/nvim/lua/custom
