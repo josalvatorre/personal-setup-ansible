@@ -61,8 +61,6 @@
       dest: /home/josalvatorre/.autoenv
 
   - name: Install personal NeoVim config
-    become: yes
-    become_user: root
     ansible.builtin.git:
       repo: https://github.com/josalvatorre/personal-nvim-config
       dest: /home/josalvatorre/.config/nvim
