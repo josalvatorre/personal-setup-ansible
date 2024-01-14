@@ -62,7 +62,7 @@
 
   - name: Install personal NeoVim config
     ansible.builtin.git:
-      repo: https://github.com/josalvatorre/personal-nvim-config
+      repo: https://github.com/NvChad/NvChad
       dest: /home/josalvatorre/.config/nvim
-      # This repo was forked from NvChad. The default branch is v2.0.
+      # The default branch is v2.0, so we need to explicitly set v3.0
       version: v3.0
