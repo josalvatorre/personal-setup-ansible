@@ -70,7 +70,7 @@
 
   - name: Install custom NvChad directory
     ansible.builtin.git:
-      repo: https://github.com/josalvatorre/personal-nvchad-custom.git
+      repo: git@github.com:josalvatorre/personal-nvchad-custom.git
       # Putting custom configs here is how you're supposed to customize NvChad.
       # https://nvchad.com/docs/config/walkthrough#config_structure
       dest: /home/josalvatorre/.config/nvim/lua/custom
