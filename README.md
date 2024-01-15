@@ -52,6 +52,10 @@ virtual environment.
 source ./venv/bin/activate
 ```
 
+If you want to automate this, then it might be a good idea to use
+[autoenv](https://github.com/hyperupcall/autoenv), which will look at the
+`.env` and `.env.leave` files in this repo.
+
 ### Cleaning
 
 Simply run `make clean` to destroy the virtual environment.
@@ -62,7 +66,7 @@ make clean
 
 ## Why not use an [Ansible Execution Environment][2] (ie container)?
 
-jalvarado tried to get this working inside a container, but he gave up for a few reasons:
+I tried to get this working inside a container, but he gave up for a few reasons:
 
 * The container-free approach is simpler in this case.
   * Ansible relies on Python (already installed on Mac) and a few packages. It was easy to make the Makefile that
