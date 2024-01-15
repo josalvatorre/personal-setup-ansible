@@ -1,5 +1,5 @@
 ---
-- name: Set up this machine
+- name: Set up devapps
   hosts: devapps
 
   tasks:
