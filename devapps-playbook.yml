@@ -45,6 +45,7 @@
       # This is normal for IDE's, which need generous access to the host machine.
       classic: true
       name:
+      - node
       - nvim
 
   - name: Install pyenv
