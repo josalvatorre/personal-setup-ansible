@@ -9,5 +9,6 @@
       update_homebrew: true
       upgrade_all: true
       name:
+      - 1password-cli
       - gh
       - tree
