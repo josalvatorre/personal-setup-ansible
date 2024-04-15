@@ -19,10 +19,15 @@ ensure_venv_exists_and_activated: ensure_scripts_are_executable
 ensure_ansible_is_installed: ensure_venv_exists_and_activated ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh pip install ansible
 
-.PHONY: hosts_are_pingable
-hosts_are_pingable: ensure_ansible_is_installed ensure_scripts_are_executable
+.PHONY: devapps_are_pingable
+devapps_are_pingable: ensure_ansible_is_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
 		ansible devapps --module-name ping -i inventory.yml
+
+.PHONY: mymac_is_pingable
+mymac_is_pingable: ensure_ansible_is_installed ensure_scripts_are_executable
+	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
+		ansible mymac --module-name ping -i inventory.yml
 
 .PHONY: galaxy_collections_are_installed
 galaxy_collections_are_installed: ensure_ansible_is_installed ensure_scripts_are_executable
@@ -30,9 +35,14 @@ galaxy_collections_are_installed: ensure_ansible_is_installed ensure_scripts_are
 		ansible-galaxy collection install community.general
 
 .PHONY: devapps-playbook-executed
-devapps-playbook-executed: hosts_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
+devapps-playbook-executed: devapps_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
 		ansible-playbook ./devapps-playbook.yml -i ./inventory.yml --ask-become-pass
+
+.PHONY: mymac-playbook-executed
+mymac-playbook-executed: mymac_is_pingable galaxy_collections_are_installed ensure_scripts_are_executable
+	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
+		ansible-playbook ./mymac-playbook.yml -i ./inventory.yml
 
 .PHONY: clean
 clean:

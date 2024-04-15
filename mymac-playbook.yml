@@ -1,0 +1,12 @@
+---
+- name: Set up my local Mac
+  hosts: mymac
+
+  tasks:
+
+  - name: Install Homebrew packages
+    community.general.homebrew:
+      update_homebrew: true
+      upgrade_all: true
+      name:
+      - tree
