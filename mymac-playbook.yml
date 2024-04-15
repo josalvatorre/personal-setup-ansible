@@ -9,4 +9,5 @@
       update_homebrew: true
       upgrade_all: true
       name:
+      - gh
       - tree
