@@ -5,6 +5,12 @@
     home_directory: /Users/josalvatorre
     code_directory: "{{ home_dir }}/code"
     nvim_config_directory: "{{ home_directory }}/.config/nvim"
+    homebrew_packages:
+    - 1password-cli
+    - gh
+    - neovim
+    - tree
+    - neovim
 
   tasks:
 
@@ -12,11 +18,9 @@
     community.general.homebrew:
       update_homebrew: true
       upgrade_all: true
-      name:
-      - 1password-cli
-      - gh
-      - neovim
-      - tree
+      name: "{{ item }}"
+    # We loop because the module seems to fail at the first package even with the hack below.
+    loop: "{{ homebrew_packages }}"
     # Homebrew print a warning if the package is already installed when you try to upgrade.
     # Unfortunately, the Ansible module sees this as an error and fails.
     # The following hack is meant to mitigate that.
