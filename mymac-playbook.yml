@@ -29,13 +29,14 @@
       - homebrew_result.failed
       - "'Warning: Not upgrading' not in homebrew_result.msg"
 
-  - name: Install NvChad
+  - name: Install NvChad Starter
     ansible.builtin.git:
-      repo: https://github.com/NvChad/NvChad
+      repo: https://github.com/NvChad/starter.git
       dest: "{{ nvim_config_directory }}"
       # The default branch is v2.0, so we need to explicitly set v2.5
       version: v2.5
 
+  # Fuck, this needs to be migrated given 2.5's breaking change
   - name: Install custom NvChad directory
     ansible.builtin.git:
       repo: git@github.com:josalvatorre/personal-nvchad-custom.git
