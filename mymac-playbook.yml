@@ -9,9 +9,10 @@
     - 1password-cli
     - gh
     - neovim
-    - tree
     - neovim
     - node
+    - ripgrep
+    - tree
 
   tasks:
 
