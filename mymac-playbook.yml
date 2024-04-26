@@ -32,6 +32,6 @@
 
   - name: Install Neovim config
     ansible.builtin.git:
-      repo: https://github.com/josalvatorre/personal-neovim-config.git
+      repo: git@github.com:josalvatorre/personal-neovim-config.git
       dest: "{{ nvim_config_directory }}"
       force: yes
