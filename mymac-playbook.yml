@@ -35,4 +35,4 @@
     ansible.builtin.git:
       repo: git@github.com:josalvatorre/personal-neovim-config.git
       dest: "{{ nvim_config_directory }}"
-      force: yes
+      force: true
