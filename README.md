@@ -1,6 +1,7 @@
-# Jose's Ubuntu setup automation using Ansible
+# Jose's personal machine setup automation using Ansible
 
-I use this repository to automate the setting-up of my personal Ubuntu machine for personal development.
+I use this repository to automate the setting-up of my personal machines, which are normally Mac or Ubuntu machines.
+I have a separate version for my work machine.
 
 Most of the automation is performed using [Ansible][1], an ssh-based
 configuration management software originally designed for deploying software to many production machines.
@@ -31,9 +32,24 @@ playbook to adapt to your use case.
 
 The Makefile should take care of installing dependencies. You can read it for details.
 The key detail is that we'll use the python interpreter you provide (default: `python3`) to create a virtual
-environment in this directory and install Ansible there. The easiest way to install Python on Ubuntu is
-by using `apt` or `apt-get`. You can google how to do that. [This website][3] has good instructions, but
-please use a newer ython version than `3.6`. Use the latest version of python you can.
+environment in this directory and install Ansible there. The latest versions of Ubuntu and Mac come with
+some version of Python 3. However, if you run into problems and need a newer version of Python, then you can
+install it using `apt` or `apt-get` for Ubuntu or [Homebrew][4] for Mac. You can google how to do that.
+[This website][3] has good instructions for Ubuntu, but use the latest version of python you can.
+
+#### Mac
+
+```sh
+# I recommend explicitly pointing Ansible to the python interpreter you want to use.
+ORIGINAL_PYTHON_PATH=/path/to/python make mymac-playbook
+# If you don't provide ORIGINAL_PYTHON_PATH, then we default to whatever python3 points to.
+make mymac-playbook
+```
+
+#### Ubuntu
+
+TODO Rename "devapp" to "ubuntu". Sorry for the confusion.
+The legacy reason is that I started with Ubuntu and thought I would only have 1 playbook for all machines.
 
 ```sh
 # I recommend explicitly pointing Ansible to the python interpreter you want to use.
@@ -83,3 +99,4 @@ into the container image or poke a hole in the container so that it can access t
 [1]: https://docs.ansible.com/ansible/latest/
 [2]: https://ansible.readthedocs.io/en/latest/getting_started_ee/index.html
 [3]: https://docs.python-guide.org/starting/install3/linux/
+[4]: https://brew.sh/
