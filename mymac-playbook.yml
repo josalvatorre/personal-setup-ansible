@@ -3,13 +3,12 @@
   hosts: mymac
   vars:
     home_directory: /Users/josalvatorre
-    code_directory: "{{ home_dir }}/code"
+    code_directory: "{{ home_directory }}/code"
     nvim_config_directory: "{{ home_directory }}/.config/nvim"
     homebrew_packages:
     - 1password-cli
     - bazelisk
     - gh
-    - neovim
     - neovim
     - node
     - ripgrep
@@ -36,4 +35,10 @@
     ansible.builtin.git:
       repo: git@github.com:josalvatorre/personal-neovim-config.git
       dest: "{{ nvim_config_directory }}"
+      force: true
+
+  - name: Install monorepo-alpha
+    ansible.builtin.git:
+      repo: git@github.com:josalvatorre/monorepo-alpha.git
+      dest: "{{ code_directory }}/monorepo-alpha"
       force: true
