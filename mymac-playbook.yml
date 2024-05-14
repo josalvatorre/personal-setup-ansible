@@ -41,4 +41,5 @@
     ansible.builtin.git:
       repo: git@github.com:josalvatorre/monorepo-alpha.git
       dest: "{{ code_directory }}/monorepo-alpha"
-      force: true
+    # This task fails if there are local changes. That's fine.
+    ignore_errors: true
