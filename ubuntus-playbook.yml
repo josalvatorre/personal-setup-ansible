@@ -1,6 +1,6 @@
 ---
-- name: Set up devapps
-  hosts: devapps
+- name: Set up ubuntus
+  hosts: ubuntus
 
   tasks:
 

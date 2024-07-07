@@ -48,14 +48,13 @@ make mymac-playbook
 
 #### Ubuntu
 
-TODO Rename "devapp" to "ubuntu". Sorry for the confusion.
 The legacy reason is that I started with Ubuntu and thought I would only have 1 playbook for all machines.
 
 ```sh
 # I recommend explicitly pointing Ansible to the python interpreter you want to use.
-ORIGINAL_PYTHON_PATH=/path/to/python make devapps-playbook-executed
+ORIGINAL_PYTHON_PATH=/path/to/python make ubuntus-playbook-executed
 # If you don't provide ORIGINAL_PYTHON_PATH, then we default to whatever python3 points to.
-make devapps-playbook-executed
+make ubuntus-playbook-executed
 ```
 
 ### Activate the virtual environment before running arbitrary Ansible commands
