@@ -16,6 +16,7 @@
       update_cache: true
       name:
       - nodejs
+      - npm
       - ripgrep
       - tmux
       - tree
