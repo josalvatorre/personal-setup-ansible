@@ -23,10 +23,8 @@ an orchestration service like Kubernetes. However, Ansible is better for persona
 
 ## How to run
 
-We'll run Ansible on the same machine that it manipulates.
-
-I'm assuming that you'll run this in your Ubuntu machine. However, you should be able to customize the inventory or
-playbook to adapt to your use case.
+I run all of my playbooks from my Mac. I'm assuming that you'll run this on your Mac as well.
+However, you should be able to customize the inventory or playbook to adapt to your use case.
 
 ### Quickstart
 
@@ -48,13 +46,14 @@ make mymac-playbook
 
 #### Ubuntu
 
-The legacy reason is that I started with Ubuntu and thought I would only have 1 playbook for all machines.
+My Ubuntu machine is a UTM virtual machine living on my Mac
+with port 22 forwarded so that Ansible can ssh into it.
 
 ```sh
 # I recommend explicitly pointing Ansible to the python interpreter you want to use.
-ORIGINAL_PYTHON_PATH=/path/to/python make ubuntus-playbook-executed
+ORIGINAL_PYTHON_PATH=/path/to/python make ubuntus-playbook
 # If you don't provide ORIGINAL_PYTHON_PATH, then we default to whatever python3 points to.
-make ubuntus-playbook-executed
+make ubuntus-playbook
 ```
 
 ### Activate the virtual environment before running arbitrary Ansible commands
