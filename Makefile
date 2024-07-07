@@ -39,6 +39,11 @@ ubuntus-playbook-executed: ubuntus_are_pingable galaxy_collections_are_installed
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
 		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass
 
+.PHONY: ubuntus-playbook-debug
+ubuntus-playbook-debug: ubuntus_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
+	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
+		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass -vvv
+
 .PHONY: mymac-playbook
 mymac-playbook: mymac_is_pingable galaxy_collections_are_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
