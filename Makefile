@@ -22,7 +22,7 @@ ensure_ansible_is_installed: ensure_venv_exists_and_activated ensure_scripts_are
 .PHONY: ubuntus_are_pingable
 ubuntus_are_pingable: ensure_ansible_is_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
-		ansible ubuntus --module-name ping -i inventory.yml
+		ansible ubuntus --module-name ping -i inventory.yml --ask-pass
 
 .PHONY: mymac_is_pingable
 mymac_is_pingable: ensure_ansible_is_installed ensure_scripts_are_executable
@@ -34,15 +34,15 @@ galaxy_collections_are_installed: ensure_ansible_is_installed ensure_scripts_are
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
 		ansible-galaxy collection install community.general
 
-.PHONY: ubuntus-playbook-executed
-ubuntus-playbook-executed: ubuntus_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
+.PHONY: ubuntus-playbook
+ubuntus-playbook: ubuntus_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
-		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass
+		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass --ask-pass
 
 .PHONY: ubuntus-playbook-debug
 ubuntus-playbook-debug: ubuntus_are_pingable galaxy_collections_are_installed ensure_scripts_are_executable
 	VENV_ACTIVATE=$(VENV_ACTIVATE) ./scripts/activate-venv-then.sh \
-		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass -vvv
+		ansible-playbook ./ubuntus-playbook.yml -i ./inventory.yml --ask-become-pass --ask-pass -vvv
 
 .PHONY: mymac-playbook
 mymac-playbook: mymac_is_pingable galaxy_collections_are_installed ensure_scripts_are_executable

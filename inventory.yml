@@ -1,8 +1,9 @@
 ubuntus:
   hosts:
-    localhost:
-      ansible_connection: local
+    vm-listening-on-port-22:
       ansible_connection: ssh
+      ansible_host: localhost
+      ansible_port: 22
       ansible_python_interpreter: /usr/bin/python3
       ansible_user: josalvatorre
 mymac:

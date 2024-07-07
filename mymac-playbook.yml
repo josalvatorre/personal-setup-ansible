@@ -10,11 +10,12 @@
     - bazelisk
     - gh
     - gnu-sed
+    - hudochenkov/sshpass/sshpass
     - neovim
     - node
     - ripgrep
-    - tree
     - tldr
+    - tree
 
   tasks:
 
