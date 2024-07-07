@@ -15,6 +15,7 @@
       state: latest
       update_cache: true
       name:
+      - nodejs
       - ripgrep
       - tmux
       - tree
