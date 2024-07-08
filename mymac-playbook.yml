@@ -11,6 +11,7 @@
     - gh
     - gnu-sed
     - hudochenkov/sshpass/sshpass
+    - jq
     - neovim
     - node
     - ripgrep
