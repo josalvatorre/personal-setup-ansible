@@ -15,10 +15,16 @@
     - jq
     - neovim
     - node
+    - openssl
     - pyenv  # This has post-installation steps.
+    - readline
     - ripgrep
+    - sqlite3
+    - tcl-tk
     - tldr
     - tree
+    - xz
+    - zlib
 
   tasks:
 
