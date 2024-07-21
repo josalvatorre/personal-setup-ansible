@@ -50,6 +50,10 @@ mymac-playbook: playbook
 %-debug: PLAYBOOK_ARGS = -vvv
 %-debug: %
 
+.PHONY: run-playbooks
+run-playbooks: ensure_ansible_is_installed galaxy_collections_are_installed
+    ./scripts/run-playbooks-in-tmux.sh
+
 .PHONY: clean
 clean:
 	rm -rf venv/
