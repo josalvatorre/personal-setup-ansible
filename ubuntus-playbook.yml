@@ -15,6 +15,9 @@
       state: latest
       update_cache: true
       name:
+      # First-time installation requires special setup
+      # https://github.com/cli/cli/blob/a81a1f7e906ef3666ef3913efd1232afea634bd4/docs/install_linux.md?plain=1#L12
+      - gh
       - nodejs
       - npm
       - ripgrep
