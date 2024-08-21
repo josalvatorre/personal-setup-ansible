@@ -64,12 +64,14 @@
       repo: https://github.com/pyenv/pyenv.git
       dest: "{{ home_directory }}/.pyenv"
       accept_hostkey: true
+      force: true
 
   - name: Install NVM
     ansible.builtin.git:
       repo: https://github.com/nvm-sh/nvm.git
       dest: "{{ home_directory }}/.nvm"
       accept_hostkey: true
+      force: true
 
   # I wanted direnv, but apt has an old version that's missing critical features.
   # The build-from-source option for direnv is complicated.
