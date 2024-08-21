@@ -45,8 +45,16 @@ ubuntus-playbook: playbook
 mymac-playbook: TARGET = mymac
 mymac-playbook: playbook
 
-%-debug: PLAYBOOK_ARGS = -vvv
-%-debug: %
+# Explicit debug targets
+.PHONY: ubuntus-playbook-debug
+ubuntus-playbook-debug: TARGET = ubuntus
+ubuntus-playbook-debug: PLAYBOOK_ARGS = -vvv
+ubuntus-playbook-debug: playbook
+
+.PHONY: mymac-playbook-debug
+mymac-playbook-debug: TARGET = mymac
+mymac-playbook-debug: PLAYBOOK_ARGS = -vvv
+mymac-playbook-debug: playbook
 
 .PHONY: run-playbooks
 run-playbooks: ensure_ansible_is_installed galaxy_collections_are_installed
