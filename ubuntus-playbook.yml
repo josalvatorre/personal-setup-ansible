@@ -2,7 +2,7 @@
 - name: Set up ubuntus
   hosts: ubuntus
   vars:
-    home_directory: /home/josalvatorre
+    home_directory: /home/ubuntu
     code_directory: "{{ home_directory }}/code"
     nvim_config_directory: "{{ home_directory }}/.config/nvim"
 
