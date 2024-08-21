@@ -72,6 +72,9 @@
       dest: "{{ home_directory }}/.nvm"
       accept_hostkey: true
       force: true
+      # This is due to a possibly temporary problem where we don't have permission
+      # to access the submodule. Re-add if we stop getting permission errors.
+      recursive: false
 
   # I wanted direnv, but apt has an old version that's missing critical features.
   # The build-from-source option for direnv is complicated.
