@@ -68,7 +68,7 @@
   - name: Install NVM
     ansible.builtin.git:
       repo: https://github.com/nvm-sh/nvm.git
-      dest: "{{ home_directory }}/.nvim"
+      dest: "{{ home_directory }}/.nvm"
       accept_hostkey: true
 
   # I wanted direnv, but apt has an old version that's missing critical features.
