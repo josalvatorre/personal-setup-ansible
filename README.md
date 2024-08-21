@@ -46,8 +46,7 @@ make mymac-playbook
 
 #### Ubuntu
 
-My Ubuntu machine is a UTM virtual machine living on my Mac
-with port 22 forwarded so that Ansible can ssh into it.
+My Ubuntu machine is a multipass virtual machine living on my Mac.
 
 ```sh
 # I recommend explicitly pointing Ansible to the python interpreter you want to use.
@@ -78,6 +77,37 @@ Simply run `make clean` to destroy the virtual environment.
 make clean
 ```
 
+### How to set up a Multipass virtual machine
+
+[Multipass][5] is a free, open-source, enterprise-grade, command-line solution for creating and managing virtual machines
+made by Canonical, the company that maintains Ubuntu. Feel free to use other solutions like UTM, VirtualBox, etc.
+You just need to customize the inventory to use other kinds of machines.
+
+1. Install [Multipass][5].
+2. Create a virtual machine.
+    * I recommend using the newest [LTS (long-term support) version of Ubuntu][6].
+    * You should immediately be able to connect to the virtual machine using `multipass shell`.
+      However, Ansible prefers ssh, so we need to set that up.
+3. Set up ssh.
+    a. Create an ssh key if you don't have one or want a unique one.
+        * The command should look something like `ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_multipass` on Mac.
+    b. Copy the public key to the virtual machine.
+        * See `multipass transfer --help`
+    c. Inside the Ubuntu instance, add the public key to your `~/.ssh/authorized_keys`.
+        * You could try something like the following: `echo "$(cat id_ed25519.pub)" >> .ssh/authorized_keys`
+    d. Get the ip address using `multipass info`.
+    e. Add the connection info to your `~/.ssh/config`.
+        * It should look somegthing like the code block below.
+    f. ssh manually with `ssh myubuntu`
+4. Update the Ansible inventory with the ip address.
+
+```
+Host myubuntu
+  HostName 192.168.64.4
+  User ubuntu
+  IdentityFile ~/.ssh/id_ed25519
+```
+
 ## Why not use an [Ansible Execution Environment][2] (ie container)?
 
 I tried to get this working inside a container, but he gave up for a few reasons:
@@ -98,3 +128,5 @@ into the container image or poke a hole in the container so that it can access t
 [2]: https://ansible.readthedocs.io/en/latest/getting_started_ee/index.html
 [3]: https://docs.python-guide.org/starting/install3/linux/
 [4]: https://brew.sh/
+[5]: https://multipass.run/
+[6]: https://ubuntu.com/about/release-cycle

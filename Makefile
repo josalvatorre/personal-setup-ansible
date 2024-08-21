@@ -25,15 +25,14 @@ galaxy_collections_are_installed: ensure_ansible_is_installed
 
 .PHONY: pingable
 pingable: ensure_ansible_is_installed
-	$(ANSIBLE_CMD) ansible $(TARGET) --module-name ping -i inventory.yml $(EXTRA_ARGS)
+	$(ANSIBLE_CMD) ansible $(TARGET) --module-name ping -i inventory.yml
 
 .PHONY: playbook
 playbook: pingable galaxy_collections_are_installed
-	$(ANSIBLE_CMD) ansible-playbook ./$(TARGET)-playbook.yml -i ./inventory.yml $(EXTRA_ARGS) $(PLAYBOOK_ARGS)
+	$(ANSIBLE_CMD) ansible-playbook ./$(TARGET)-playbook.yml -i ./inventory.yml $(PLAYBOOK_ARGS)
 
 .PHONY: ubuntus_are_pingable mymac_is_pingable
 ubuntus_are_pingable: TARGET = ubuntus
-ubuntus_are_pingable: EXTRA_ARGS = --ask-pass
 ubuntus_are_pingable: pingable
 
 mymac_is_pingable: TARGET = mymac
@@ -41,7 +40,6 @@ mymac_is_pingable: pingable
 
 .PHONY: ubuntus-playbook ubuntus-playbook-debug mymac-playbook mymac-playbook-debug
 ubuntus-playbook: TARGET = ubuntus
-ubuntus-playbook: EXTRA_ARGS = --ask-become-pass --ask-pass
 ubuntus-playbook: playbook
 
 mymac-playbook: TARGET = mymac
