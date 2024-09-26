@@ -11,6 +11,7 @@
     - bazelisk
     - gh
     - gnu-sed
+    - hashicorp/tap/terraform
     - hudochenkov/sshpass/sshpass
     - jq
     - neovim
@@ -28,6 +29,11 @@
     - zlib
 
   tasks:
+
+  - name: Hashicorp Tap
+    community.general.homebrew_tap:
+      name: 
+      - hashicorp/tap
 
   - name: Install Homebrew packages
     community.general.homebrew:
