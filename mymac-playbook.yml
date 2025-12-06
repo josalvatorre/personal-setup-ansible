@@ -40,6 +40,7 @@
       update_homebrew: true
       upgrade_all: true
       name: "{{ item }}"
+    ignore_errors: true
     # We loop because the module seems to fail at the first package even with the hack below.
     loop: "{{ homebrew_packages }}"
     # Homebrew print a warning if the package is already installed when you try to upgrade.
