@@ -50,6 +50,11 @@
       - homebrew_result.failed
       - "'Warning: Not upgrading' not in homebrew_result.msg"
 
+  - name: Install Claude Code
+    community.general.homebrew_cask:
+      name: claude-code
+      state: present
+
   - name: Install Neovim config
     ansible.builtin.git:
       repo: git@github.com:josalvatorre/personal-neovim-config.git
