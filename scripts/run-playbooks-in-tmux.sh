@@ -4,7 +4,7 @@
 create_persistent_session() {
   local session_name="$1"
   local command="$2"
-  tmux new-session -d -s "$session_name" "($command); bash"
+  tmux new-session -d -s "$session_name" "($command); zsh"
 }
 
 # Create persistent sessions for each playbook
