@@ -42,13 +42,6 @@
       - libffi-dev
       - liblzma-dev
 
-  - name: Install snaps
-    become: yes
-    become_user: root
-    community.general.snap:
-      name:
-      - tldr
-
   - name: Install classic snaps
     become: yes
     become_user: root
